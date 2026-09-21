@@ -2735,8 +2735,11 @@
 
       /* Autoplay music on "Open Invitation" click (user gesture allows it) */
       const bgMusic = document.getElementById('bg-music');
+      console.log('Attempting to play music, bgMusic element:', bgMusic);
+      console.log('Playing state before:', playing);
       if (bgMusic && !playing) {
         bgMusic.play().then(() => {
+          console.log('Music started successfully');
           playing = true;
           const pl = document.getElementById('player');
           const ip = document.getElementById('icon-play');
@@ -2746,7 +2749,11 @@
           if (ipause) ipause.style.display = 'block';
           const fmb = document.getElementById('footer-music-btn');
           if (fmb) fmb.textContent = '❚❚ Pause Music';
-        }).catch(() => { });
+        }).catch((err) => { 
+          console.error('Music autoplay failed:', err);
+        });
+      } else {
+        console.log('Music not started - bgMusic:', !!bgMusic, 'playing:', playing);
       }
     }
     introVideo.addEventListener('ended', endIntro);
