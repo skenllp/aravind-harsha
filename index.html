@@ -2435,7 +2435,7 @@
     </section>
 
     <!-- EVENTS -->
-    <section id="events" class="section">
+    <!-- <section id="events" class="section">
       <div class="eyebrow">The Celebrations</div>
       <h2 style="font-size:clamp(30px,4.5vw,48px);color:var(--heading);">Two Chapters, One Story</h2>
       <div class="event-grid">
@@ -2491,7 +2491,7 @@
         </div>
 
       </div>
-    </section>
+    </section> -->
 
     <!-- LOVE STORY -->
     <section id="story" class="section">
@@ -2719,6 +2719,9 @@
     const openInviteBtn = document.getElementById('open-invitation');
     const site = document.getElementById('site');
     document.body.style.overflow = 'hidden';
+
+    /* Music state — declared here so endIntro() and toggleMusic() share it */
+    let playing = false;
 
     setTimeout(() => openInviteBtn.classList.add('show'), 2000);
 
@@ -3224,7 +3227,6 @@ END:VCALENDAR`;
     const music = document.getElementById('bg-music');
     const iconPlay = document.getElementById('icon-play');
     const iconPause = document.getElementById('icon-pause');
-    let playing = false;
     function toggleMusic() {
       if (!playing) {
         music.play().then(() => {
