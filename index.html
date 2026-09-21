@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Poppins:wght@200;300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Poppins:wght@200;300;400;500;600&display=swap"
     rel="stylesheet">
 
   <style>
@@ -92,7 +92,7 @@
     }
 
     .script {
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Alex Brush', cursive;
     }
 
     a {
@@ -455,6 +455,7 @@
     }
 
     .hero-names {
+      font-family: 'Alex Brush', cursive;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -467,6 +468,11 @@
     .hero-names .name-part {
       display: block;
       line-height: 1.1;
+    }
+
+    .hero-names .name-part .char:first-child {
+      text-transform: uppercase;
+      font-size: 1.15em;
     }
 
     .hero-names .amp {
@@ -2443,7 +2449,7 @@
         <div class="event-chapter" id="chapter-wedding">
           <div class="event-photo" style="--focus:63% 40%;">
             <div class="photo-inner">
-              <img src="gallery/gallery-04.jpg" alt="Aravind and Harsha" loading="lazy" decoding="async">
+              <img src="gallery/gallery-01.jpeg" alt="Aravind and Harsha" loading="lazy" decoding="async">
               <div class="vignette"></div>
             </div>
           </div>
@@ -2468,7 +2474,7 @@
         <div class="event-chapter reverse" id="chapter-reception">
           <div class="event-photo" style="--focus:30% 40%;">
             <div class="photo-inner">
-              <img src="gallery/gallery-01.jpg" alt="Aravind and Harsha" loading="lazy" decoding="async">
+              <img src="gallery/gallery-02.jpeg" alt="Aravind and Harsha" loading="lazy" decoding="async">
               <div class="vignette"></div>
             </div>
           </div>
@@ -2498,7 +2504,7 @@
       <div class="eyebrow">Their Journey</div>
       <h2 style="font-size:clamp(30px,4.5vw,48px);color:var(--heading);">A Love Story</h2>
       <figure class="story-photo">
-        <img src="gallery/gallery-02.jpg" alt="Aravind and Harsha walking hand in hand" loading="lazy" decoding="async">
+        <img src="gallery/love and story.jpeg" alt="Aravind and Harsha love story" loading="lazy" decoding="async">
       </figure>
       <div class="timeline">
         <div class="tl-item">
@@ -2546,8 +2552,8 @@
               style="--rot:-3.2deg;--nudge-y:14px;--drift-delay:0s;" onclick="openLightbox(0)">
               <div class="photo-card__inner">
                 <div class="photo-card__paper">
-                  <img loading="lazy" decoding="async" src="gallery/gallery-01.jpg"
-                    alt="Aravind and Harsha smiling together">
+                  <img loading="lazy" decoding="async" src="gallery/gallery-03.jpg"
+                    alt="Aravind and Harsha seated together">
                 </div>
               </div>
             </figure>
@@ -2556,8 +2562,8 @@
               style="--rot:2.4deg;--nudge-y:-8px;--drift-delay:.5s;" onclick="openLightbox(1)">
               <div class="photo-card__inner">
                 <div class="photo-card__paper">
-                  <img loading="lazy" decoding="async" src="gallery/gallery-02.jpg"
-                    alt="Aravind and Harsha walking hand in hand">
+                  <img loading="lazy" decoding="async" src="gallery/gallery-01.jpeg"
+                    alt="Aravind and Harsha smiling together">
                 </div>
               </div>
             </figure>
@@ -2566,18 +2572,8 @@
               style="--rot:-1.8deg;--nudge-y:10px;--drift-delay:1s;" onclick="openLightbox(2)">
               <div class="photo-card__inner">
                 <div class="photo-card__paper">
-                  <img loading="lazy" decoding="async" src="gallery/gallery-03.jpg"
-                    alt="Aravind and Harsha seated together">
-                </div>
-              </div>
-            </figure>
-
-            <figure class="photo-card photo-card--lg photo-tile" data-enter="right" data-speed="-0.05"
-              style="--rot:3.1deg;--nudge-y:-12px;--drift-delay:1.5s;" onclick="openLightbox(3)">
-              <div class="photo-card__inner">
-                <div class="photo-card__paper">
-                  <img loading="lazy" decoding="async" src="gallery/gallery-04.jpg"
-                    alt="Aravind and Harsha portrait under floral arch">
+                  <img loading="lazy" decoding="async" src="gallery/gallery-02.jpeg"
+                    alt="Aravind and Harsha walking hand in hand">
                 </div>
               </div>
             </figure>
@@ -2856,8 +2852,9 @@
     /* ================= HERO NAME REVEAL ================= */
     function splitHeroNames() {
       document.querySelectorAll('#hero-names .name-part').forEach(part => {
-        const text = part.textContent;
-        part.innerHTML = text.split('').map(ch => `<span class="char">${ch}</span>`).join('');
+        const text = part.textContent.trim();
+        const capitalized = text.charAt(0).toUpperCase() + text.slice(1);
+        part.innerHTML = capitalized.split('').map(ch => `<span class="char">${ch}</span>`).join('');
       });
     }
     splitHeroNames();
