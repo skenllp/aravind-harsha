@@ -2705,7 +2705,7 @@
       <rect x="14" y="4" width="4" height="16"></rect>
     </svg>
   </button>
-  <audio id="bg-music" loop src="music.webm"></audio>
+  <audio id="bg-music" loop preload="auto" src="music.webm"></audio>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -2722,22 +2722,25 @@
 
     /* Music state — declared here so endIntro() and toggleMusic() share it */
     let playing = false;
+    
+    /* Pre-load audio on mobile */
+    const bgMusic = document.getElementById('bg-music');
+    if (bgMusic) {
+      bgMusic.load();
+    }
 
     setTimeout(() => openInviteBtn.classList.add('show'), 2000);
 
     function endIntro() {
       if (introScreen.classList.contains('fade-out')) return;
-      introScreen.classList.add('fade-out');
-      document.body.style.overflow = '';
-      gsap.to(site, { opacity: 1, duration: 1.4, ease: 'power2.out' });
-      setTimeout(() => introScreen.remove(), 1400);
-      initScrollAnimations();
-
-      /* Autoplay music on "Open Invitation" click (user gesture allows it) */
+      
+      /* START MUSIC IMMEDIATELY on user gesture (critical for mobile) */
       const bgMusic = document.getElementById('bg-music');
-      console.log('Attempting to play music, bgMusic element:', bgMusic);
-      console.log('Playing state before:', playing);
       if (bgMusic && !playing) {
+        // iOS/mobile unlock: set volume before playing
+        bgMusic.volume = 0.7;
+        bgMusic.muted = false;
+        
         bgMusic.play().then(() => {
           console.log('Music started successfully');
           playing = true;
@@ -2751,9 +2754,28 @@
           if (fmb) fmb.textContent = '❚❚ Pause Music';
         }).catch((err) => { 
           console.error('Music autoplay failed:', err);
+          // Retry once more after a tiny delay for mobile
+          setTimeout(() => {
+            bgMusic.play().then(() => {
+              playing = true;
+              const pl = document.getElementById('player');
+              if (pl) pl.classList.add('playing');
+              const ip = document.getElementById('icon-play');
+              const ipause = document.getElementById('icon-pause');
+              if (ip) ip.style.display = 'none';
+              if (ipause) ipause.style.display = 'block';
+            }).catch(() => console.error('Retry also failed'));
+          }, 100);
         });
-      } else {
-        console.log('Music not started - bgMusic:', !!bgMusic, 'playing:', playing);
+      }
+      
+      /* Then handle UI transitions */
+      introScreen.classList.add('fade-out');
+      document.body.style.overflow = '';
+      gsap.to(site, { opacity: 1, duration: 1.4, ease: 'power2.out' });
+      setTimeout(() => introScreen.remove(), 1400);
+      if (typeof initScrollAnimations === 'function') {
+        initScrollAnimations();
       }
     }
     introVideo.addEventListener('ended', endIntro);
